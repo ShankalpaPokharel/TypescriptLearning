@@ -90,5 +90,178 @@ const getHellow = (s:string):string =>{
 signUpUser("shankalpa","shankalpa@gmail.com","fhsfa34",true)
 loginUser("h","h@g.com")
 ```
+### Function with object
+```ts
+const User = {
+    name:"shankalpa",
+    email:"shankalpa@gmail.com",
+    isActive:true
+}
 
-8 v finish
+function createUser({name:string,isPaid:boolean}){}
+
+createUser({name:"hitesh", isPaid:false})
+createUser({name:"hitesh", isPaid:false,email:"s@s.com"})// it gives the error 
+let user = {name:"hitesh", isPaid:false,email:"s@s.com"}
+createUser(user) //it doesn't give the error
+
+function createCourse():{name:string, price:number}{
+    return {name:"reactjs",price:399}
+}
+
+export {}
+
+```
+
+
+
+## Type Aliases
+```ts
+type Userr = {
+    readonly _id:string;
+    name:string;
+    email:string;
+    isActive:boolean;
+    credcardDetails?:number //optional type
+}
+
+// function createUserr(u:User){
+
+// }
+```
+
+## Readonly and optional and Combine type in Typescript
+```ts
+type Userr = {
+    readonly _id:string;
+    name:string;
+    email:string;
+    isActive:boolean;
+    credcardDetails?:number //optional type
+}
+let myUser:Userr = {
+    _id:"1234",
+    name:"s",
+    email:"s@gmail.com",
+    isActive:false,
+    credcardDetails:3423
+
+}
+
+myUser.name = "fsdf"
+myUser._id = "dfds" //can't assign on readonly
+
+type cardNumber = {
+    cardnumber:string
+}
+
+type cardDate = {
+    cardDate:string
+}
+
+//combile the type
+type cardDetails= cardNumber & cardDate & {
+    cvv:number
+}
+
+```
+
+## Union Types and List in Ts
+```ts
+let score:number | string = 33
+score = 44
+score= "55"
+
+type User = {
+    name:string;
+    id:number
+}
+type Admin = {
+    username:string;
+    id:number
+}
+let shankalpa:User | Admin = {name:"shankalpa",id:3432}
+shankalpa = {username:"sp",id:342}
+
+// function getDbId(id:number | string){
+//     console.log(`Db id is: ${id}`)
+// }
+
+// getDbId(3)
+// getDbId("3")
+
+function getDbId(id:number | string){
+//    id.toLowerCase() //property lowercase doesn't exist on type number | string
+    if (typeof id ==="string"){id.toLowerCase()}
+}
+
+getDbId(3)
+getDbId("3")
+
+//array
+const data:number[] = [1,2,3,4]
+
+const data2: string[] = ["1","2"]
+const data3: (string | number | boolean)[] = ["1","2",2,true]
+
+
+let seatAllotment: "aisle" | "middle" | "window"
+
+seatAllotment = "middle"
+```
+
+## Tuples in typescript
+```ts
+// const user: (string|number)[] = [1,"hc"]
+
+// for precise order 
+let user: [number,string,boolean] 
+user = [1,"ab",true]
+
+let rgb:[number,number,number] = [255,123,112]
+
+type Userr = [number,string]
+
+const newUser:Userr =[112,"abc@gmail.com"]
+
+newUser[1] = "ab.com" //we are able to change like list but this is not behevior of tuple
+newUser.push("hi")
+```
+
+
+## Interface in typescript
+```ts
+interface Useer {
+    readonly dbId:number
+    email:string,
+    userId:number,
+    googleId?:string
+    // startTrail:()=>string
+    startTrail():string// both can do
+    getCoupon(couponname:string):number
+}
+
+//reopening of interface
+interface Useer {githubToken:string}
+
+//inheritance
+interface Adminn extends Useer{
+    role:"admin"|"ta"|"learner"
+}
+
+
+const shank:Useer = {dbId:22,email:"s@g.com",userId:3432,githubToken:"github",
+    startTrail:()=>{return "trail started"},
+    getCoupon:(name:"san10")=>{return 10}
+}
+const sha:Adminn = {dbId:22,email:"s@g.com",userId:3432,githubToken:"github", role:"admin",
+    startTrail:()=>{return "trail started"},
+    getCoupon:(name:"san10")=>{return 10}
+}
+    
+
+```
+
+
+
+![interface vs type alises](<images/Screenshot 2024-06-23 at 10.10.03 AM.png>)
