@@ -45,7 +45,8 @@ how to assign float and int in ts?
 
 
 
-type inference
+### Type Inference
+TypeScript Inference. TypeScript Inference defines that TypeScript will automatically detect variables data type, functions return type, Object types, Array Types, etc. This detection is based on the values assigned to the variables and the usage of the code or function calls.
 
 
 ##### Any 
