@@ -145,7 +145,6 @@ let myUser:Userr = {
     email:"s@gmail.com",
     isActive:false,
     credcardDetails:3423
-
 }
 
 myUser.name = "fsdf"
@@ -163,7 +162,6 @@ type cardDate = {
 type cardDetails= cardNumber & cardDate & {
     cvv:number
 }
-
 ```
 
 ## Union Types and List in Ts
@@ -200,7 +198,6 @@ getDbId("3")
 
 //array
 const data:number[] = [1,2,3,4]
-
 const data2: string[] = ["1","2"]
 const data3: (string | number | boolean)[] = ["1","2",2,true]
 
@@ -259,9 +256,177 @@ const sha:Adminn = {dbId:22,email:"s@g.com",userId:3432,githubToken:"github", ro
     getCoupon:(name:"san10")=>{return 10}
 }
     
+```
 
+![interface vs type alises](<images/Screenshot 2024-06-23 at 10.10.03 AM.png>)
+
+## Private and Public in typescript
+```ts
+class User{
+    readonly city:string = "kathmandu"
+    #id:string="sdfsdf" //here # work as a pirvate keyword
+    constructor(public email:string, public name:string, private userId:string){
+
+    }
+}
+const john = new User("","","")
+john.name
 ```
 
 
+## Getters and Setters and protected in typescript
+private : can access only in class
+public :anywhere outside the class
+protected : inherited class
 
-![interface vs type alises](<images/Screenshot 2024-06-23 at 10.10.03 AM.png>)
+```ts
+class Uuser{
+    protected _courseCount = 1 //protected works on where it is inherited. not outside the class
+    readonly city:string = "kathmandu"
+    #id:string="sdfsdf" //here # work as a pirvate keyword
+    constructor(public email:string, public name:string, private userId:string){
+    }
+
+    private deleteToken(){
+        console.log("Deleted token")
+    }
+
+    get getAppleEmail():string{
+        return `apple${this.email}`
+    }
+    // getter
+    get courseCount():number {
+        return this._courseCount
+    }
+
+    // setter
+    set courseCount(courseNum:number){ //not allow to return type (couseNum):void/stirg
+        if (courseNum<= 1){
+            throw new Error("Course coun t shuld be more than 1")
+        }
+        this._courseCount = courseNum
+    }   
+}
+
+class SubUser extends Uuser{
+    isFamily:boolean = true
+    changeCourseCount(){
+        this._courseCount = 4
+    }
+}
+
+const niko = new Uuser("","","")
+niko.courseCount = 3
+```
+
+## Abstract
+```ts
+// abstract is exact blueprint
+abstract class TakePhoto{
+    constructor(public cameraMode:string, public filter:string){}
+
+    abstract getSepia():void //this method should use by inherited class
+    getReelTime():number{
+        //some complex clalucation
+        return 8
+    }
+}
+
+// const nikodomas = new TakePhoto("test","Test") //can't create instane of abstrac class
+
+class Instagram extends TakePhoto{
+    constructor(public cameraMode:string,public filter:string,public burst:number){
+        super(cameraMode,filter)
+    }
+    getSepia(): void {
+        console.log("Sepia")
+    }
+}
+const nikodomas = new Instagram("test","Test",3)
+```
+
+
+## Generics in Typescript
+it make component(chunks of code) make code reusable. 
+```ts
+const scoree:Array<number> = []
+const names:Array<string> = []
+
+
+function identityOne(val:boolean | number) : boolean | number {
+    return val
+}
+
+function identitTwo(val:any):any{
+    return val
+}
+
+function identityThree<Type>(val:Type):Type{
+    return val
+}
+//in the type , when i pass the the number as a paramenter return type will be number
+
+identityThree(true)
+
+// shortcut of identityThree insteand of T we can put anything but should be the same to all
+function identityFour<T>(val:T):T{
+    return val
+}
+
+interface Bootle{
+    brand:string,
+    type:number
+}
+
+// identityFour<Bootle>({})
+
+function getSearchProducts<T>(products:T[]):T{
+    //do some database operations
+    const myIndex = 3
+    return products[myIndex]
+}
+
+//generic arrow function
+const getMoreSearchProducts = <T,>(products:T[]):T=>{//we can simply write in <T> but in react we can see <T,> mention  as a generic not jsx syntax 
+    //do some database operations
+    const myIndex =4
+    return products[myIndex]
+}
+
+
+// **Generic class**
+
+interface Database{
+    connection:string,
+    username:string,
+    passworrd:string
+}
+
+function anotherFunction <T,U extends Database>(valOne:T,valTwo:U):object{
+    return {valOne,valTwo}
+}
+
+// anotherFunction(3,{})
+
+interface Quiz{
+    name:string,
+    type: string
+}
+
+interface Course{
+    name:string,
+    author: string,
+    subject:string
+}
+
+class Sellable<T>{
+    public cart:T[]=[]
+
+    addToCart(product:T){
+        this.cart.push(product)
+    }
+}
+
+
+```
+
